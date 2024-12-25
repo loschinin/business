@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.13.7
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    networks:
+      - business_network
+
+  features:
+    build:
+      context: .
+      dockerfile: features/Dockerfile.features
+    volumes:
+      - ./logs:/app/logs
+    environment:
+      - PYTHONPATH=/app
+    depends_on:
+      - rabbitmq
+    networks:
+      - business_network
+
+  metric:
+    build:
+      context: .
+      dockerfile: metric/Dockerfile.metric
+    volumes:
+      - ./logs:/app/logs
+    environment:
+      - PYTHONPATH=/app
+    networks:
+      - business_network
+
+  plot:
+    build:
+      context: .
+      dockerfile: plot/Dockerfile.plot
+    volumes:
+      - ./logs:/app/logs
+    environment:
+      - PYTHONPATH=/app
+    networks:
+      - business_network
+
+networks:
+  business_network:
+    driver: bridge

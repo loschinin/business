@@ -1,0 +1,22 @@
+FROM python:3.9-slim
+
+# Установка netcat
+RUN apt-get update && apt-get install -y netcat-openbsd && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Копируем requirements.txt из корневой папки проекта
+COPY requirements.txt .
+
+RUN pip install -r requirements.txt
+
+# Копируем все файлы в контейнер
+COPY . .
+
+# Копируем скрипт wait-for-rabbitmq.sh и делаем его исполнимым
+COPY features/wait-for-rabbitmq.sh .
+
+RUN chmod +x wait-for-rabbitmq.sh
+
+# Указываем команду для запуска скрипта ожидания и Python приложения
+CMD ["./wait-for-rabbitmq.sh", "&&", "python", "features/features.py"]
