@@ -11,13 +11,18 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %
 
 # Создаём бесконечный цикл для отправки сообщений в очередь
 while True:
+    logging.debug(f"Создаём бесконечный цикл для отправки сообщений в очередь")
     try:
         logging.debug("Загружаем датасет о диабете")
         # Загружаем датасет о диабете
         X, y = load_diabetes(return_X_y=True)
+        logging.debug(f"Загружаем датасет X {X}")
+        logging.debug(f"Загружаем датасет y {y}")
 
         # Формируем случайный индекс строки
         random_row = np.random.randint(0, X.shape[0]-1)
+        logging.debug(f"Формируем случайный индекс строки random_row {random_row}")
+        logging.debug(f"Формируем случайный индекс строки y random_row {y[random_row]}")
 
         # Генерируем уникальный идентификатор для сообщения
         message_id = datetime.timestamp(datetime.now())

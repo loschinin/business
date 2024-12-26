@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   rabbitmq:
-    image: rabbitmq:3.13.7
+    image: rabbitmq:latest
     ports:
       - "15672:15672"
       - "5672:5672"
@@ -30,6 +30,8 @@ services:
       - ./logs:/app/logs
     environment:
       - PYTHONPATH=/app
+    depends_on:
+      - rabbitmq
     networks:
       - business_network
 
@@ -41,6 +43,8 @@ services:
       - ./logs:/app/logs
     environment:
       - PYTHONPATH=/app
+    depends_on:
+      - rabbitmq
     networks:
       - business_network
 

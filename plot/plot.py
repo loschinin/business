@@ -13,7 +13,7 @@ metric_log_path = './logs/metric_log.csv'
 def read_first_5_lines():
     try:
         df = pd.read_csv(metric_log_path)
-        logging.debug("Первые 5 строк из metric_log.csv:")
+        logging.debug("PLOT: Первые 5 строк из metric_log.csv:")
         logging.debug(df.head())  # Вывод первых 5 строк
     except Exception as e:
         logging.error(f"Ошибка при чтении metric_log.csv: {e}")

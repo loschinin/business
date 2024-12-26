@@ -3,3 +3,4 @@ pika
 numpy
 matplotlib
 pandas
+rabbitmq

@@ -1,6 +1,10 @@
 #!/bin/bash
-while ! nc -z rabbitmq 5672; do
-  echo "Waiting for RabbitMQ..."
-  sleep 2
+set -e
+host="rabbitmq"
+shift
+until nc -z "$host" 5672; do
+  >&2 echo "RabbitMQ is unavailable - sleeping"
+  sleep 1
 done
-echo "RabbitMQ is up and running!"
+>&2 echo "RabbitMQ is up - executing command"
+exec "$@"
